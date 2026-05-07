@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kon Bnega GOAT?</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Our Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<!-- ── APP WRAPPER ── -->
+<div id="app">
+
+  <!-- ══ SCREEN 1: HOME ══ -->
+  <div class="screen active" id="screen-home">
+    <div class="home-container">
+      <div class="logo-area">
+        <div class="goat-emoji">🐐</div>
+        <h1 class="app-title">Kon Bnega <span>GOAT?</span></h1>
+        <p class="app-subtitle">You think you are a know it all like sheldon?<br/>Prove it. 🎬🎵🎮</p>
+      </div>
+
+      <div class="home-actions">
+        <button class="btn-primary" id="btn-play">
+          <i class="fas fa-play"></i> Start Quiz
+        </button>
+        <button class="btn-secondary" id="btn-flashcards">
+          <i class="fas fa-layer-group"></i> Flashcard Mode
+        </button>
+        <button class="btn-outline" id="btn-leaderboard">
+          <i class="fas fa-trophy"></i> Leaderboard
+        </button>
+      </div>
+
+      <div class="home-stats">
+        <div class="stat-chip">
+          <i class="fas fa-question-circle"></i> 100+ Questions
+        </div>
+        <div class="stat-chip">
+          <i class="fas fa-th-large"></i> 6 Categories
+        </div>
+        <div class="stat-chip">
+          <i class="fas fa-bolt"></i> Lifelines Included
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 2: ENTER NAME ══ -->
+  <div class="screen" id="screen-name">
+    <div class="card-container">
+      <h2><i class="fas fa-user"></i> What's your name, GOAT?</h2>
+      <p class="sub">Your name will appear on the leaderboard 🏆</p>
+      <input
+        type="text"
+        id="player-name"
+        class="name-input"
+        placeholder="Enter your name..."
+        maxlength="20"
+      />
+      <button class="btn-primary" id="btn-name-next">
+        Let's Go <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 3: CATEGORY SELECT ══ -->
+  <div class="screen" id="screen-categories">
+    <div class="categories-container">
+      <h2 class="screen-title">Pick Your Categories 🎯</h2>
+      <p class="screen-sub">Select one or more — we'll mix the questions!</p>
+
+      <div class="category-grid" id="category-grid">
+
+        <div class="category-card" data-category="sitcoms">
+          <div class="cat-icon">📺</div>
+          <div class="cat-name">Sitcoms</div>
+          <div class="cat-desc">Friends, The Office, B99...</div>
+        </div>
+
+        <div class="category-card" data-category="movies">
+          <div class="cat-icon">🎬</div>
+          <div class="cat-name">Movies</div>
+          <div class="cat-desc">Marvel, Harry Potter, Disney...</div>
+        </div>
+
+        <div class="category-card" data-category="music">
+          <div class="cat-icon">🎵</div>
+          <div class="cat-name">Music</div>
+          <div class="cat-desc">Pop, Lyrics, Artists...</div>
+        </div>
+
+        <div class="category-card" data-category="gaming">
+          <div class="cat-icon">🎮</div>
+          <div class="cat-name">Gaming</div>
+          <div class="cat-desc">Characters, Games, History...</div>
+        </div>
+
+        <div class="category-card" data-category="ott">
+          <div class="cat-icon">🍿</div>
+          <div class="cat-name">Netflix & OTT</div>
+          <div class="cat-desc">Stranger Things, Breaking Bad...</div>
+        </div>
+
+        <div class="category-card" data-category="popculture">
+          <div class="cat-icon">🌍</div>
+          <div class="cat-name">Pop Culture</div>
+          <div class="cat-desc">Memes, Viral moments, Celebs...</div>
+        </div>
+
+      </div>
+
+      <div class="category-actions">
+        <button class="btn-outline" id="btn-select-all">
+          <i class="fas fa-check-double"></i> Select All
+        </button>
+        <button class="btn-primary" id="btn-start-quiz" disabled>
+          Start Quiz <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 4: QUIZ ══ -->
+  <div class="screen" id="screen-quiz">
+    <div class="quiz-container">
+
+      <!-- Top bar -->
+      <div class="quiz-topbar">
+        <div class="quiz-meta">
+          <span class="category-badge" id="current-category">📺 Sitcoms</span>
+          <span class="question-counter" id="question-counter">Q 1 / 10</span>
+        </div>
+        <div class="score-display">
+          <i class="fas fa-star"></i>
+          <span id="live-score">0</span>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+
+      <!-- Timer -->
+      <div class="timer-area">
+        <div class="timer-ring">
+          <svg viewBox="0 0 100 100">
+            <circle class="timer-bg" cx="50" cy="50" r="45"/>
+            <circle class="timer-arc" id="timer-arc" cx="50" cy="50" r="45"/>
+          </svg>
+          <div class="timer-text" id="timer-text">15</div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="question-card">
+        <p class="question-text" id="question-text">
+          Which sitcom features a character named "Dwight Schrute"?
+        </p>
+      </div>
+
+      <!-- Options -->
+      <div class="options-grid" id="options-grid">
+        <button class="option-btn" data-index="0">A. The Office</button>
+        <button class="option-btn" data-index="1">B. Friends</button>
+        <button class="option-btn" data-index="2">C. Parks & Rec</button>
+        <button class="option-btn" data-index="3">D. Seinfeld</button>
+      </div>
+
+      <!-- Lifelines -->
+      <div class="lifelines-bar">
+        <button class="lifeline-btn" id="lifeline-5050" title="50/50">
+          <i class="fas fa-percent"></i> 50/50
+        </button>
+        <button class="lifeline-btn" id="lifeline-skip" title="Skip">
+          <i class="fas fa-forward"></i> Skip
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 5: REVIEW ANSWERS ══ -->
+  <div class="screen" id="screen-review">
+    <div class="review-container">
+      <h2 class="screen-title">📋 Answer Review</h2>
+      <p class="screen-sub" id="review-sub">You got 7 out of 10 correct!</p>
+      <div class="review-list" id="review-list">
+        <!-- Filled by JS -->
+      </div>
+      <button class="btn-primary" id="btn-review-done">
+        See Results <i class="fas fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 6: RESULTS ══ -->
+  <div class="screen" id="screen-results">
+    <div class="results-container">
+      <div class="result-emoji" id="result-emoji">🏆</div>
+      <h2 class="result-title" id="result-title">You're a GOAT!</h2>
+      <p class="result-sub" id="result-sub">Amazing performance!</p>
+
+      <div class="result-score-card">
+        <div class="result-stat">
+          <div class="stat-value" id="final-score">0</div>
+          <div class="stat-label">Score</div>
+        </div>
+        <div class="result-stat">
+          <div class="stat-value" id="final-correct">0</div>
+          <div class="stat-label">Correct</div>
+        </div>
+        <div class="result-stat">
+          <div class="stat-value" id="final-accuracy">0%</div>
+          <div class="stat-label">Accuracy</div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn-primary" id="btn-play-again">
+          <i class="fas fa-redo"></i> Play Again
+        </button>
+        <button class="btn-secondary" id="btn-review-answers">
+          <i class="fas fa-list"></i> Review Answers
+        </button>
+        <button class="btn-outline" id="btn-go-leaderboard">
+          <i class="fas fa-trophy"></i> Leaderboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 7: LEADERBOARD ══ -->
+  <div class="screen" id="screen-leaderboard">
+    <div class="leaderboard-container">
+      <h2 class="screen-title">
+        <i class="fas fa-trophy"></i> Leaderboard
+      </h2>
+      <div class="leaderboard-list" id="leaderboard-list">
+        <!-- Filled by JS from localStorage -->
+      </div>
+      <button class="btn-outline" id="btn-lb-home">
+        <i class="fas fa-home"></i> Home
+      </button>
+    </div>
+  </div>
+
+  <!-- ══ SCREEN 8: FLASHCARD MODE ══ -->
+  <div class="screen" id="screen-flashcards">
+    <div class="flashcard-container">
+
+      <div class="flashcard-topbar">
+        <h2><i class="fas fa-layer-group"></i> Flashcard Mode</h2>
+        <span class="fc-counter" id="fc-counter">1 / 10</span>
+      </div>
+
+      <!-- Category picker for flashcards -->
+      <div class="fc-category-row" id="fc-category-row">
+        <button class="fc-cat-btn active" data-cat="all">All</button>
+        <button class="fc-cat-btn" data-cat="sitcoms">📺</button>
+        <button class="fc-cat-btn" data-cat="movies">🎬</button>
+        <button class="fc-cat-btn" data-cat="music">🎵</button>
+        <button class="fc-cat-btn" data-cat="gaming">🎮</button>
+        <button class="fc-cat-btn" data-cat="ott">🍿</button>
+        <button class="fc-cat-btn" data-cat="popculture">🌍</button>
+      </div>
+
+      <!-- The flip card -->
+      <div class="flashcard" id="flashcard">
+        <div class="flashcard-inner" id="flashcard-inner">
+          <div class="flashcard-front">
+            <p class="fc-label">QUESTION</p>
+            <p class="fc-text" id="fc-question">What is the name of Ross's pet monkey in Friends?</p>
+            <p class="fc-hint">Tap to reveal answer 👇</p>
+          </div>
+          <div class="flashcard-back">
+            <p class="fc-label">ANSWER</p>
+            <p class="fc-text" id="fc-answer">Marcel</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="fc-nav">
+        <button class="btn-outline" id="fc-prev">
+          <i class="fas fa-chevron-left"></i> Prev
+        </button>
+        <button class="btn-outline" id="fc-next">
+          Next <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <button class="btn-outline" id="btn-fc-home">
+        <i class="fas fa-home"></i> Home
+      </button>
+
+    </div>
+  </div>
+
+</div> <!-- end #app -->
+
+  <!-- Load questions bank FIRST, then app logic -->
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
